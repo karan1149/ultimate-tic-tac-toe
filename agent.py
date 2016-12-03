@@ -82,4 +82,4 @@ class MinimaxAgent:
 
 
 
-        return randomMax([(minimaxValue(succ(state, action), self.depth, player(state), getOppIndex(player(state))), action) for action in actions]);
+        return randomMax([(minimaxValue(succ(state, action), self.depth, getOppIndex(player(state)), getOppIndex(player(state))), action) for action in actions]);
