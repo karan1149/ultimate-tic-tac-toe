@@ -13,7 +13,7 @@ class RandomAgent:
 class PerceptronAgent:
 
     def __init__(self):
-        self.weights = {"numWins" : 1, "numCenterPieces": .2, "numAdjacentPieces": .4, "numCornerPieces": .1};
+        self.weights = {"numWins" : 5, "numCenterPieces": .2, "numAdjacentPieces": .4, "numCornerPieces": .1};
 
     def getAction(self, state):
         possibleActions = actions(state);
@@ -37,28 +37,22 @@ class PerceptronAgent:
 
 class ReflexAgent:
     def getAction(self, state):
-        printBoard(state[0]);
-        print state[1], state[2];
-        print state;
-        print;
         possibleActions = actions(state);
+        numberActions = len(possibleActions);
+
         modifiedActions = [action for action in possibleActions if self.actionFilter(state, action)];
-        numberActions = len(modifiedActions);
-        if numberActions != 0:
-            randomAction = modifiedActions[random.randrange(numberActions)];
+        modifiedNumberActions = len(modifiedActions);
+
+        if modifiedNumberActions != 0:
+            randomAction = modifiedActions[random.randrange(modifiedNumberActions)];
         else:
-            numberActions = len(possibleActions);
             randomAction = possibleActions[random.randrange(numberActions)];
         return randomAction;
 
     def actionFilter(self, state, action):
         currentOppWins = getGridWins(state)[getOppIndex(player(state))];
-        printBoard(state[0]);
         # check if making move might give a square to the opponent
         opponentState = succ(state, action);
-        printBoard(state[0]);
-        print;
-        print;
         opponentActions = actions(opponentState);
         # assume a function returning (Player 1 tiles won, Player 2 tiles won) exists getGridWins(state)
 
