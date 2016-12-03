@@ -29,9 +29,10 @@ def actions(state):
 	board = state[0]
 	lastPos = state[2]
 	if(lastPos == None or board[lastPos].status != 0):
-		for grid in board:
+		for i in range(9):
+			grid = board[i]
 			if(grid.status == 0):
-				actions.extend(findActionsInGrid(grid, lastPos));
+				actions.extend(findActionsInGrid(grid, i));
 	else:
 		actions = findActionsInGrid(board[lastPos], lastPos)
 	return actions;
@@ -87,7 +88,7 @@ def updateGridStatus(grid):
 			gridWithStatus.status = botMid
 			return
 	for row in grid:
-		for col in grid[row]:
+		for col in row:
 			if(col == 0):
 				return
 	gridWithStatus.status = 3 ## if all positions are filled and no winners, status = tied
@@ -100,27 +101,27 @@ def isEnd(state):
 	cStat = board[4].status ## Status of center grid
 	if(cStat != 0 and cStat != 3):
 		if((cStat == board[3].status and cStat == board[5].status) or (cStat == board[1].status and cStat == board[7].status) or (cStat == board[0].status and cStat == board[8].status) or (cStat == board[2].status and cStat == board[6].status)):
-			state[1] == cStat
+			state = (state[0], cStat, state[2])
 			return True
 	tmStat = board[1].status ## status of top middle grid
 	if(tmStat != 0 and tmStat != 3):
 		if(tmStat == board[0].status and tmStat == board[2].status):
-			state[1] = tmStat
+			state = (state[0],tmStat, state[2])
 			return True
 	lmStat = board[3].status ## status of left middle grid
 	if(lmStat != 0 and lmStat != 3):
 		if(lmStat == board[0].status and lmStat == board[6].status):
-			state[1] = lmStat
+			state = (state[0],lmStat,state[2])
 			return True
 	rmStat = board[5].status ## status of right middle grid
 	if(rmStat != 0 and rmStat != 3):
 		if(rmStat == board[2] and rmStat == board[8]):
-			state[1] = rmStat
+			state = (state[0], rmStat, state[2])
 			return True
 	bmStat = board[7].status ## status of bottom middle grid
 	if(bmStat != 0 and bmStat != 3):
 		if(bmStat == board[6].status and bmStat == board[8].status):
-			state[1] = bmStat
+			state = (state[0], bmStat, state[2])
 			return True
 	allFilled = 1
 	for grid in board: ## Makes there exists a grid still in play, if not then game is a draw
@@ -128,7 +129,7 @@ def isEnd(state):
 			allFilled = 0
 			break
 	if(allFilled == 1):
-		state[1] = 3
+		state = (state[0], 3, state[2])
 		return True
 	return False
 
