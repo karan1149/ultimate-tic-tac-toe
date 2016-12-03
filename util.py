@@ -18,9 +18,9 @@ def getOppIndex(playerIndex):
 def printBoard(board):
     for i in range(3):
         curGrid1 = board[i*3].grid
-        curGrid2 = board[i*3 + 1].grid 
+        curGrid2 = board[i*3 + 1].grid
         curGrid3 = board[i*3 + 2].grid
-        for k in range(3): 
+        for k in range(3):
             for j in range(3):
                 print curGrid1[k][j],
             for j in range(3):
@@ -94,11 +94,6 @@ def adjacentToSpace(grid,x, y):
     for dx in range(-1, 2):
         for dy in range(-1, 2):
             if((x + dx > -1 and x + dx < 3) and (y + dy > -1 and y + dy < 3)): ## in bounds
-                if(grid[x][y] == grid[x+dx][y+dy]):
+                if(grid[x][y] == grid[x+dx][y+dy] and (not (dx == 0 and dy == 0))):
                     adjMoves += 1
     return adjMoves
-
-
-
-
-
