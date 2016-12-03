@@ -71,6 +71,45 @@ class MinimaxAgent:
         self.weights = collections.defaultdict(float);
         # optimize eta, decreasing function
         self.eta = .001;
+        # can play with number of iterations
+        self.monteCarloIterations = 25;
+    def monteCarloUpdate(self, state):
+        for i in range(self.monteCarloIterations):
+            # can play with exploration policy
+            episode = [];
+            currentState = state;
+            while not isEnd(currentState):
+                player = player(currentState);
+                actions = actions(state);
+                if player == 0:
+                    bestNewState = None;
+                    bestAction = None;
+                    bestScore = float("-inf");
+                    for action in actions:
+                        successor = succ(state, action);
+                        score = dotProduct(featureExtractor(successor), self.weights);
+                        if score > bestScore:
+                            bestAction = action;
+                            bestNewState = successor;
+                    reward = 0 if not isEnd(newState) else utility(newState);
+                    episode.extend((currentState, bestAction, reward, bestNewState));
+                    currentState = bestNewState;
+                elif player == 1:
+                    worstNewState = None;
+                    worstAction = None;
+                    worstScore = float("inf");
+                    for action in actions:
+                        successor = succ(state, action);
+                        score = dotProduct(featureExtractor(successor), self.weights);
+                        if score > worstScore:
+                            worstAction = action;
+                            worstNewState = successor;
+                    reward = 0 if not isEnd(newState) else utility(newState);
+                    episode.extend((currentState, worstAction, reward, worstNewState));
+                    currentState = worstNewState;
+            # possibly shuffle or reverse
+            for resultTuple in episode:
+                TDLearningUpdate(*resultTuple);
     def TDLearningUpdate(self, state, action, reward, newState):
         gradient = featureExtractor(state);
         residual = dotProduct(featureExtractor(state), self.weights) - reward - dotProduct(featureExtractor(newState), self.weights);
