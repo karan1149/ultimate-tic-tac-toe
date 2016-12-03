@@ -1,4 +1,5 @@
 from util import *
+import copy
 
 class Grid():
 	def __init__(self):
@@ -49,7 +50,8 @@ def findActionsInGrid(grid, gridNum):
 
 #get successor state from a state given an action
 def succ(state, action):
-	board = state[0]
+	succState = copy.deepcopy(state)
+	board = succState[0]
 	grid = board[action[0]]
 	rowCol = rowColFromPos(action[1])
 	grid.grid[rowCol[0]][rowCol[1]] = state[1] + 1 ## indexes grid, then row, then col to get element
