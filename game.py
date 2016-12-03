@@ -50,14 +50,13 @@ def findActionsInGrid(grid, gridNum):
 
 #get successor state from a state given an action
 def succ(state, action):
-	succState = copy.deepcopy(state)
-	board = succState[0]
+	board = copy.deepcopy(state[0])
 	grid = board[action[0]]
 	rowCol = rowColFromPos(action[1])
 	grid.grid[rowCol[0]][rowCol[1]] = state[1] + 1 ## indexes grid, then row, then col to get element
 	if(grid.status == 0):
 		updateGridStatus(grid) ## check if grid is won, lost, or tied
-	return succState;
+	return (board, getOppIndex(state[1]), action[1]);
 
 def updateGridStatus(grid):
 	gridWithStatus = grid;
@@ -136,8 +135,6 @@ def playerWins(state):
 # fix this to account for draws
 # utility for state if it is an end state
 def utility(state):
-	printBoard(state[0]);
-	printBoardStatuses(state[0]);
 	result = playerWins(state)
 	print result[1]
 	if(result[1] == 1):
