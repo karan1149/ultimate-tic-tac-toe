@@ -17,10 +17,18 @@ def getOppIndex(playerIndex):
 
 def printBoard(board):
     for i in range(3):
-        curGrid1 = board[i*3]
-        curGrid2 = board[i*3 + 1] 
-        curGrid3 = board[i*3 + 2] 
-         
+        curGrid1 = board[i*3].grid
+        curGrid2 = board[i*3 + 1].grid 
+        curGrid3 = board[i*3 + 2].grid
+        for k in range(3): 
+            for j in range(3):
+                print curGrid1[k][j],
+            for j in range(3):
+                print curGrid2[k][j],
+            for j in range(3):
+                print curGrid3[k][j],
+            print
+
 def getGridWins(state): # returns tuple of (agentWins, oppWins)
     agentWins = 0
     oppWins = 0
@@ -72,6 +80,9 @@ def countAdjacentMoves(state, player):
     for grid in board:
         for row in grid:
             for col in grid[row]:
+                return
+
+
 
 
 
