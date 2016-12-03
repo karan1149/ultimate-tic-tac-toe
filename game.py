@@ -57,7 +57,7 @@ def succ(state, action):
 	grid.grid[rowCol[0]][rowCol[1]] = state[1] + 1 ## indexes grid, then row, then col to get element
 	if(grid.status == 0):
 		updateGridStatus(grid) ## check if grid is won, lost, or tied
-	return (board, getOppIndex(state[1]), action[1])
+	return succState;
 
 def updateGridStatus(grid):
 	gridWithStatus = grid;
@@ -101,7 +101,7 @@ def isEnd(state):
 	return result[0]
 
 
-def playerWins(state): 
+def playerWins(state):
 	board = state[0]
 	cStat = board[4].status ## Status of center grid
 	if(cStat != 0 and cStat != 3):
