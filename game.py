@@ -34,11 +34,11 @@ def actions(state):
 				actions.extend(findActionsInGrid(board[lastPos], actions, lastPos));
 	else:
 		actions = findActionsInGrid(board[lastPos], actions, lastPos)
-    return actions;
+	return actions;
 
 ## Helper method that finds all available positions in a grid and adds to possible actions
 def findActionsInGrid(grid, gridNum):
-    actions = [];
+	actions = [];
 	for row in grid:
 		for col in grid[row]:
 			if(col == 0):
@@ -75,7 +75,7 @@ def updateGridStatus(grid):
 			return
 	rightMid = grid[1][2]
 	if(rightMid != 0):
-		if(rightMid == grid[0][2] and rightMid = grid[2][2]):
+		if(rightMid == grid[0][2] and rightMid == grid[2][2]):
 			grid.status = rightMid
 			return
 	botMid = grid[2][1]
@@ -105,8 +105,8 @@ def isEnd(state):
 			state[1] = tmStat
 			return True
 	lmStat = board[3].status ## status of left middle grid
-	if(lmStat != 0 and lmStat != 3): 
-		if(lmStat == board[0].status and lmStat = board[6].status):
+	if(lmStat != 0 and lmStat != 3):
+		if(lmStat == board[0].status and lmStat == board[6].status):
 			state[1] = lmStat
 			return True
 	rmStat = board[5].status ## status of right middle grid
@@ -116,7 +116,7 @@ def isEnd(state):
 			return True
 	bmStat = board[7].status ## status of bottom middle grid
 	if(bmStat != 0 and bmStat != 3):
-		if(bmStat == board[6].status and bmStat = board[8].status):
+		if(bmStat == board[6].status and bmStat == board[8].status):
 			state[1] = bmStat
 			return True
 	allFilled = 1
