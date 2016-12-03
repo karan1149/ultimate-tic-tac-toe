@@ -16,3 +16,12 @@ def getGridWins(state): # returns tuple of (agentWins, oppWins)
         if(grid.status == 2):
             oppWins += 1
     return (agentWins, oppWins)
+
+def posFromRowCol(row, col):
+    return 3*row + col
+
+def rowColFromPos(pos):
+    row = pos/3
+    col = pos % 3
+    return (row, col)
+

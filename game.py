@@ -46,7 +46,7 @@ def findActionsInGrid(grid, gridNum):
 	for row in grid:
 		for col in grid[row]:
 			if(col == 0):
-				actions.append((gridNum, 3*row + col))
+				actions.append((gridNum, posFromRowCol(row, col)))
 	return actions;
 
 
@@ -55,15 +55,13 @@ def findActionsInGrid(grid, gridNum):
 def succ(state, action):
 	board = state[0]
 	grid = board[action[0]]
-	grid[action[1]/3][action[1]%3] = state[1] + 1 ## indexes grid, then row, then col to get element
+	rowCol = rowColFromPos(action[1])
+	grid[rowCol[0]][rowCol[1]] = state[1] + 1 ## indexes grid, then row, then col to get element
 	updateGridStatus(grid) ## check if grid is won, lost, or tied
-	nextPlayer = 0
-    # refer to karans function
-	if(state[1] == 0):
-		nextPlayer = 1
-	return (board, nextPlayer, action[1])
+	return (board, getOppIndex(state[1]), action[1])
 
 def updateGridStatus(grid):
+	posChecks = [4, 1, ]
 
 #check if a state is an end state
 def isEnd(state):
