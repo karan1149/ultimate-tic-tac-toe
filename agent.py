@@ -69,6 +69,8 @@ class MinimaxAgent:
     def __init__(self, d):
         self.depth = d;
         self.weights = collections.defaultdict(float);
+        # optimize eta, decreasing function
+        self.eta = .001;
     def getAction(self, state):
         def minimaxValue(state, depth, firstInTree, agent):
             actions = actions(state);
