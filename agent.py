@@ -131,7 +131,86 @@ class MinimaxAgent:
         return randomMax([(minimaxValue(succ(state, action), self.depth, getOppIndex(player(state)), getOppIndex(player(state))), action) \
             for action in actions]);
 
-        def TDLearning(state, action, reward, newState):
 
-        return randomMax([(minimaxValue(succ(state, action), self.depth, getOppIndex(player(state)), getOppIndex(player(state))), action) \
+
+class MinimaxPruningAgent:
+    def __init__(self, d):
+        self.depth = d;
+        self.weights = collections.defaultdict(float);
+        # optimize eta, decreasing function
+        self.eta = .001;
+        # can play with number of iterations
+        self.monteCarloIterations = 25;
+    def monteCarloUpdate(self, state):
+        for i in range(self.monteCarloIterations):
+            # can play with exploration policy
+            episode = [];
+            currentState = state;
+            while not isEnd(currentState):
+                player = player(currentState);
+                actions = actions(state);
+                if player == 0:
+                    bestNewState = None;
+                    bestAction = None;
+                    bestScore = float("-inf");
+                    for action in actions:
+                        successor = succ(state, action);
+                        score = dotProduct(featureExtractor(successor), self.weights);
+                        if score > bestScore:
+                            bestAction = action;
+                            bestNewState = successor;
+                    reward = 0 if not isEnd(newState) else utility(newState);
+                    episode.extend((currentState, bestAction, reward, bestNewState));
+                    currentState = bestNewState;
+                elif player == 1:
+                    worstNewState = None;
+                    worstAction = None;
+                    worstScore = float("inf");
+                    for action in actions:
+                        successor = succ(state, action);
+                        score = dotProduct(featureExtractor(successor), self.weights);
+                        if score > worstScore:
+                            worstAction = action;
+                            worstNewState = successor;
+                    reward = 0 if not isEnd(newState) else utility(newState);
+                    episode.extend((currentState, worstAction, reward, worstNewState));
+                    currentState = worstNewState;
+            # possibly shuffle or reverse
+            for resultTuple in episode:
+                TDLearningUpdate(*resultTuple);
+    def TDLearningUpdate(self, state, action, reward, newState):
+        gradient = featureExtractor(state);
+        residual = dotProduct(featureExtractor(state), self.weights) - reward - dotProduct(featureExtractor(newState), self.weights);
+        multiplyVector(gradient, residual);
+        incrementSparseVector(self.weights, -1 * self.eta, gradient);
+    def getAction(self, state):
+        def minimaxValue(state, depth, firstInTree, agent, alpha, beta):
+            actions = actions(state);
+            if isEnd(state):
+                return utility(state);
+            elif depth == 0:
+                return self.eval(state);
+            newDepth = depth - 1 if agent != firstInTree else depth;
+            if agent == 0:
+                if alpha < beta:
+                    for action in actions:
+                        if alpha < beta:
+                            score = minimaxValue(succ(state, action), newDepth, firstInTree, getOppIndex(agent), alpha, beta);
+                            if score > alpha:
+                                alpha = score;
+                        else:
+                            return alpha;
+                return alpha;
+            elif agent == 1:
+                if alpha < beta:
+                    for action in actions:
+                        if alpha < beta:
+                            score = minimaxValue(succ(state, action), newDepth, firstInTree, getOppIndex(agent), alpha, beta);
+                            if result < beta:
+                                beta = result;
+                        else:
+                            return beta;
+                return min(minimaxValue(succ(state, action), newDepth, firstInTree, getOppIndex(agent)) for action in actions);
+        self.monteCarloUpdate(state);
+        return randomMax([(minimaxValue(succ(state, action), self.depth, getOppIndex(player(state)), getOppIndex(player(state)), float("-inf"), float("inf")), action) \
             for action in actions]);
