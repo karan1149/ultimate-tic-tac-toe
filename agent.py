@@ -64,3 +64,22 @@ class ReflexAgent:
         opponentSuccess = any([getGridWins(succ(opponentState, oppAction))[getOppIndex(player(state))] > currentOppWins for oppAction in opponentActions]);
         return not opponentSuccess;
 
+class MinimaxAgent:
+    def __init__(self, d):
+        self.depth = d;
+        self.eval = None;
+    def getAction(self, state):
+        def randomMax(successors):
+            maximumValue = max(successors)[0];
+            possibleSuccessors = [successor for successor in successors if successor[0] == maximumValue];
+            return random.choice(possibleSuccessors)[1];
+        def minimaxValue(state, depth, firstInTree, turn):
+            actions = actions(state);
+            if isEnd(state):
+                return utility(state);
+            elif depth == 0:
+                return self.eval(state);
+
+
+
+        return randomMax([(minimaxValue(succ(state, action), self.depth, player(state), getOppIndex(player(state))), action) for action in actions]);
