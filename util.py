@@ -8,6 +8,10 @@ def incrementSparseVector(v1, scale, v2):
     for x in v2:
         v1[x] += v2[x] * scale;
 
+def multiplySparseVector(v1, scale):
+    for x in v1:
+        v1[x] *= scale;
+
 def getOppIndex(playerIndex):
     return abs(playerIndex - 1);
 
