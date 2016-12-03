@@ -98,9 +98,34 @@ def updateGridStatus(grid):
 #check if a state is an end state
 def isEnd(state):
 	board = state[0]
-	centerStatus = board[4].status
-	if(centerStatus != 0 or centerStatus != 3):
-		if((centerStatus == board[3] and centerStatus == board[5]) or )
+	cStat = board[4].status ## Status of center grid
+	if(cStat != 0 and cStat != 3):
+		if((cStat == board[3].status and cStat == board[5].status) or (cStat == board[1].status and cStat == board[7].status) or (cStat == board[0].status and cStat == board[8].status) or (cStat == board[2].status and cStat == board[6].status)):
+			return True
+	tmStat = board[1].status ## status of top middle grid
+	if(tmStat != 0 and tmStat != 3):
+		if(tmStat == board[0].status and tmStat == board[2].status):
+			return True
+	lmStat = board[3].status ## status of left middle grid
+	if(lmStat != 0 and lmStat != 3): 
+		if(lmStat == board[0].status and lmStat = board[6].status):
+			return True
+	rmStat = board[5].status ## status of right middle grid
+	if(rmStat != 0 and rmStat != 3):
+		if(rmStat == board[2] and rmStat == board[8]):
+			return True
+	bmStat = board[7].status ## status of bottom middle grid
+	if(bmStat != 0 and bmStat != 3):
+		if(bmStat == board[6].status and bmStat = board[8].status):
+			return True
+	allFilled = 1
+	for grid in board: ## Makes there exists a grid still in play, if not then game is a draw
+		if(grid.status == 0):
+			allFilled = 0
+			break
+	if(allFilled == 1):
+		return True
+
 
 
 # fix this to account for draws
