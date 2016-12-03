@@ -12,15 +12,15 @@ class Grid():
 	def __str__(self):
 		return str(self.grid)
 
-	def getGridWins(self,state): # returns tuple of (agentWins, oppWins)
-		agentWins = 0
-		oppWins = 0
-		for row in state[0]: #state[0] = board
-			if(state[0][row] == 1):
-				agentWins += 1
-			if(state[0][row] == 2):
-				oppWins += 1
-		return (agentWins, oppWins)
+def getGridWins(state): # returns tuple of (agentWins, oppWins)
+    agentWins = 0
+    oppWins = 0
+    for row in state[0]: #state[0] = board
+        if(state[0][row].status == 1):
+            agentWins += 1
+        if(state[0][row].status == 2):
+            oppWins += 1
+    return (agentWins, oppWins)
 
 # get start state for game
 def startState():
@@ -48,7 +48,7 @@ def actions(state):
 		actions = findAvailablePos(board[lastPos], actions, lastPos)
 
 ## Helper method that finds all available positions in a grid and adds to possible actions
-def findAvailablePos(grid, actions, gridNum): 
+def findAvailablePos(grid, actions, gridNum):
 	for row in grid:
 		for col in grid[row]:
 			if(col == 0):
