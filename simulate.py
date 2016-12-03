@@ -10,11 +10,15 @@ class TicTacToeSimulator:
     def playGame(self):
         state = startState();
         while not isEnd(state):
+            printBoard(state[0]);
+            print state[1], state[2];
+            print;
             assert(player(state) >= 0 and player(state) <= 1);
             if player(state) == 1:
                 action = self.agent1.getAction(state);
             else:
                 action = self.agent2.getAction(state);
+            print action;
             state = succ(state, action);
         return utility(state);
 
