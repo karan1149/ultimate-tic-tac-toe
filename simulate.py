@@ -11,9 +11,9 @@ class TicTacToeSimulator:
         state = startState();
         while not isEnd(state):
             if player(state) == 1:
-                action = agent1.getAction(state);
-            elif player(state) == 2:
-                action = agent2.getAction(state);
+                action = self.agent1.getAction(state);
+            else:
+                action = self.agent2.getAction(state);
             state = succ(state, action);
 
         return 1 if utility(state) > 0 else 2;
