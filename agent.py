@@ -1,5 +1,7 @@
 import game as *;
 import random;
+import collections;
+
 def dotProduct(v1, v2):
     sum = 0;
     for x in v1:
