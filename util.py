@@ -4,6 +4,10 @@ def dotProduct(v1, v2):
         sum += v1[x] * v2[x]
     return sum;
 
+def incrementSparseVector(v1, scale, v2):
+    for x in v2:
+        v1[x] += v2[x] * scale;
+
 def getOppIndex(playerIndex):
     return abs(playerIndex - 1);
 

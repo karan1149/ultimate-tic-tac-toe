@@ -59,7 +59,7 @@ class ReflexAgent:
 class MinimaxAgent:
     def __init__(self, d):
         self.depth = d;
-        self.eval = None;
+        self.weights = collections.defaultdict(float);
     def getAction(self, state):
         def minimaxValue(state, depth, firstInTree, agent):
             actions = actions(state);
@@ -72,4 +72,9 @@ class MinimaxAgent:
                 return max(minimaxValue(succ(state, action), newDepth, firstInTree, getOppIndex(agent)) for action in actions);
             elif agent == 1:
                 return min(minimaxValue(succ(state, action), newDepth, firstInTree, getOppIndex(agent)) for action in actions);
-        return randomMax([(minimaxValue(succ(state, action), self.depth, getOppIndex(player(state)), getOppIndex(player(state))), action) for action in actions]);
+        def monteCarloUpdate
+
+        def TDLearning(state, action, reward, newState):
+
+        return randomMax([(minimaxValue(succ(state, action), self.depth, getOppIndex(player(state)), getOppIndex(player(state))), action) \
+            for action in actions]);
