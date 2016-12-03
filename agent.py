@@ -61,17 +61,15 @@ class MinimaxAgent:
         self.depth = d;
         self.eval = None;
     def getAction(self, state):
-        def randomMax(successors):
-            maximumValue = max(successors)[0];
-            possibleSuccessors = [successor for successor in successors if successor[0] == maximumValue];
-            return random.choice(possibleSuccessors)[1];
-        def minimaxValue(state, depth, firstInTree, turn):
+        def minimaxValue(state, depth, firstInTree, agent):
             actions = actions(state);
             if isEnd(state):
                 return utility(state);
             elif depth == 0:
                 return self.eval(state);
-
-
-
+            newDepth = depth - 1 if agent != firstInTree else depth;
+            if agent == 0:
+                return max(minimaxValue(succ(state, action), newDepth, firstInTree, getOppIndex(agent)) for action in actions);
+            elif agent == 1:
+                return min(minimaxValue(succ(state, action), newDepth, firstInTree, getOppIndex(agent)) for action in actions);
         return randomMax([(minimaxValue(succ(state, action), self.depth, getOppIndex(player(state)), getOppIndex(player(state))), action) for action in actions]);
