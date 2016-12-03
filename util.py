@@ -25,3 +25,7 @@ def rowColFromPos(pos):
     col = pos % 3
     return (row, col)
 
+def randomMax(successors):
+    maximumValue = max(successors)[0];
+    possibleSuccessors = [successor for successor in successors if successor[0] == maximumValue];
+    return random.choice(possibleSuccessors)[1];
