@@ -1,3 +1,4 @@
+import util as *
 
 class Grid():
 	def __init__(self):
@@ -12,13 +13,15 @@ class Grid():
 	def __str__(self):
 		return str(self.grid)
 
+
+
 def getGridWins(state): # returns tuple of (agentWins, oppWins)
     agentWins = 0
     oppWins = 0
-    for row in state[0]: #state[0] = board
-        if(state[0][row].status == 1):
+    for grid in state[0]: #state[0] = board
+        if(grid.status == 1):
             agentWins += 1
-        if(state[0][row].status == 2):
+        if(grid.status == 2):
             oppWins += 1
     return (agentWins, oppWins)
 
@@ -28,7 +31,7 @@ def startState():
 	for row in range(9):
 		board.append(Grid())
 	printBoard(board)
-	return (board, 1, None)
+	return (board, 0, None)
 
 
 def printBoard(board):
@@ -41,21 +44,21 @@ def actions(state):
 	board = state[0]
 	lastPos = state[2]
 	if(lastPos == None or board[lastPos].status != 0):
-		for row in board:
-			if(board[lastPos].status == 0):
-				actions = findAvailablePos(board[lastPos], actions, lastPos)
+		for grid in board:
+			if(grid.status == 0):
+				actions.extend(findActionsInGrid(board[lastPos], actions, lastPos));
 	else:
-		actions = findAvailablePos(board[lastPos], actions, lastPos)
+		actions = findActionsInGrid(board[lastPos], actions, lastPos)
+    return actions;
 
 ## Helper method that finds all available positions in a grid and adds to possible actions
-def findAvailablePos(grid, actions, gridNum):
+def findActionsInGrid(grid, gridNum):
+    actions = [];
 	for row in grid:
 		for col in grid[row]:
 			if(col == 0):
 				actions.append((gridNum, 3*row + col))
-	return actions
-
-
+	return actions;
 
 
 
@@ -66,6 +69,7 @@ def succ(state, action):
 	grid[action[1]/3][action[1]%3] = state[1] + 1 ## indexes grid, then row, then col to get element
 	updateGridStatus(grid) ## check if grid is won, lost, or tied
 	nextPlayer = 0
+    # refer to karans function
 	if(state[1] == 0):
 		nextPlayer = 1
 	return (board, nextPlayer, action[1])
@@ -76,7 +80,7 @@ def updateGridStatus(grid):
 def isEnd(state):
 	return
 
-
+# fix this to account for draws
 # utility for state if it is an end state
 def utility(state):
 	if(state[1] == 0):
