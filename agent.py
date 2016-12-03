@@ -56,6 +56,15 @@ class ReflexAgent:
         opponentSuccess = any([getGridWins(succ(opponentState, oppAction))[getOppIndex(player(state))] > currentOppWins for oppAction in opponentActions]);
         return not opponentSuccess;
 
+def featureExtractor(state):
+    features = collections.defaultdict(float);
+    features["numWins"] = getGridWins(state)[getOppIndex(player(state))];
+    # assumes helper countCenterMoves(state, player number 0 indexed)
+    features["numCenterPieces"] = countCenterMoves(state, getOppIndex(player(state)));
+    features["numCornerPieces"] = countCornerMoves(state, getOppIndex(player(state)));
+    features["numAdjacentPieces"] = countAdjacentMoves(state, getOppIndex(player(state)));
+    return features;
+
 class MinimaxAgent:
     def __init__(self, d):
         self.depth = d;
