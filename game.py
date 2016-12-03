@@ -57,15 +57,51 @@ def succ(state, action):
 	grid = board[action[0]]
 	rowCol = rowColFromPos(action[1])
 	grid[rowCol[0]][rowCol[1]] = state[1] + 1 ## indexes grid, then row, then col to get element
-	updateGridStatus(grid) ## check if grid is won, lost, or tied
+	if(grid.status == 0):
+		updateGridStatus(grid) ## check if grid is won, lost, or tied
 	return (board, getOppIndex(state[1]), action[1])
 
 def updateGridStatus(grid):
-	posChecks = [4, 1, ]
+	center = grid[1][1]
+	if(center != 0):
+		if((center == grid[1][0] and center == grid[1][2]) or (center == grid[0][1] and center == grid[2][1]) or (center == grid[0][0] and center == grid[2][2]) or (center == grid[0][2] and center == grid[2][0])):
+			grid.status = center
+			return
+	topMid = grid[0][1]
+	if(topMid != 0):
+		if(topMid == grid[0][0] and topMid == grid[0][2]):
+			grid.status = topMid
+			return
+	leftMid = grid[1][0]
+	if(leftMid != 0):
+		if(leftMid == grid[0][0] and leftMid == grid[2][0]):
+			grid.status = leftMid
+			return
+	rightMid = grid[1][2]
+	if(rightMid != 0):
+		if(rightMid == grid[0][2] and rightMid = grid[2][2]):
+			grid.status = rightMid
+			return
+	botMid = grid[2][1]
+	if(botMid != 0):
+		if(botMid == grid[2][0] and botMid == grid[2][2]):
+			grid.status = botMid
+			return
+	for row in grid:
+		for col in grid[row]:
+			if(col == 0):
+				return
+	grid.status = 3 ## if all positions are filled and no winners, status = tied
+	return
+
 
 #check if a state is an end state
 def isEnd(state):
-	return
+	board = state[0]
+	centerStatus = board[4].status
+	if(centerStatus != 0 or centerStatus != 3):
+		if((centerStatus == board[3] and centerStatus == board[5]) or )
+
 
 # fix this to account for draws
 # utility for state if it is an end state
