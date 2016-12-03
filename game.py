@@ -1,4 +1,4 @@
-import util as *
+from util import *
 
 class Grid():
 	def __init__(self):
@@ -22,10 +22,6 @@ def startState():
 	printBoard(board)
 	return (board, 0, None)
 
-# fix printing here so it appears to be a proper grid and move to util.py
-def printBoard(board):
-	for row in board:
-		print row
 
 #get possible actions for a given state
 def actions(state):
