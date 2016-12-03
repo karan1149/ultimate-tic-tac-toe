@@ -95,41 +95,40 @@ def updateGridStatus(grid):
 
 #check if a state is an end state
 def isEnd(state):
+	result = playerWins(state)
+	return result[0]
+
+
+def playerWins(state): 
 	board = state[0]
 	cStat = board[4].status ## Status of center grid
 	if(cStat != 0 and cStat != 3):
 		if((cStat == board[3].status and cStat == board[5].status) or (cStat == board[1].status and cStat == board[7].status) or (cStat == board[0].status and cStat == board[8].status) or (cStat == board[2].status and cStat == board[6].status)):
-			state = (state[0], cStat, state[2])
-			return True
+			return (True, cStat)
 	tmStat = board[1].status ## status of top middle grid
 	if(tmStat != 0 and tmStat != 3):
 		if(tmStat == board[0].status and tmStat == board[2].status):
-			state = (state[0],tmStat, state[2])
-			return True
+			return (True, tmStat)
 	lmStat = board[3].status ## status of left middle grid
 	if(lmStat != 0 and lmStat != 3):
 		if(lmStat == board[0].status and lmStat == board[6].status):
-			state = (state[0],lmStat,state[2])
-			return True
+			return (True, lmStat)
 	rmStat = board[5].status ## status of right middle grid
 	if(rmStat != 0 and rmStat != 3):
 		if(rmStat == board[2] and rmStat == board[8]):
-			state = (state[0], rmStat, state[2])
-			return True
+			return (True, rmStat)
 	bmStat = board[7].status ## status of bottom middle grid
 	if(bmStat != 0 and bmStat != 3):
 		if(bmStat == board[6].status and bmStat == board[8].status):
-			state = (state[0], bmStat, state[2])
-			return True
+			return (True, bmStat)
 	allFilled = 1
 	for grid in board: ## Makes there exists a grid still in play, if not then game is a draw
 		if(grid.status == 0):
 			allFilled = 0
 			break
 	if(allFilled == 1):
-		state = (state[0], 3, state[2])
-		return True
-	return False
+		return (True, 3) ## tie game
+	return (False, None)
 
 
 # fix this to account for draws
@@ -137,9 +136,11 @@ def isEnd(state):
 def utility(state):
 	printBoard(state[0]);
 	printBoardStatuses(state[0]);
-	if(state[1] == 1):
+	result = playerWins(state)
+	print result[1]
+	if(result[1] == 1):
 		return 100
-	elif(state[1] == 2):
+	elif(result[1] == 2):
 		return -100
 	return 0
 

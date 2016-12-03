@@ -1,3 +1,4 @@
+import random
 def dotProduct(v1, v2):
     sum = 0;
     for x in v1:
