@@ -6,6 +6,9 @@ def dotProduct(v1, v2):
         sum += v1[x] * v2[x]
     return sum;
 
+def getOppIndex(playerIndex):
+    return abs(playerIndex - 1);
+
 class RandomAgent:
     def getAction(self, state):
         possibleActions = actions(state);
