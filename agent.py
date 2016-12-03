@@ -20,13 +20,13 @@ class PerceptronAgent:
         bestAction = None;
         bestActionScore = float("-inf");
         for action in possibleActions:
-            score = dotProduct(extractFeatures(succ(state, action)), self.weights);
+            score = dotProduct(simpleFeatureExtractor(succ(state, action)), self.weights);
             if score > bestActionScore:
                 bestActionScore = score;
                 bestAction = action;
         return action;
 
-    def extractFeatures(self, state):
+    def simpleFeatureExtractor(self, state):
         features = collections.defaultdict(float);
         features["numWins"] = getGridWins(state)[getOppIndex(player(state))];
         # assumes helper countCenterMoves(state, player number 0 indexed)
