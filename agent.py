@@ -71,6 +71,11 @@ class MinimaxAgent:
         self.weights = collections.defaultdict(float);
         # optimize eta, decreasing function
         self.eta = .001;
+    def TDLearningUpdate(self, state, action, reward, newState):
+        gradient = featureExtractor(state);
+        residual = dotProduct(featureExtractor(state), self.weights) - reward - dotProduct(featureExtractor(newState), self.weights);
+        multiplyVector(gradient, residual);
+        incrementSparseVector(self.weights, -1 * self.eta, gradient);
     def getAction(self, state):
         def minimaxValue(state, depth, firstInTree, agent):
             actions = actions(state);
