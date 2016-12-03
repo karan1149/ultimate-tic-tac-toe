@@ -37,6 +37,10 @@ class PerceptronAgent:
 
 class ReflexAgent:
     def getAction(self, state):
+        printBoard(state[0]);
+        print state[1], state[2];
+        print state;
+        print;
         possibleActions = actions(state);
         modifiedActions = [action for action in possibleActions if self.actionFilter(state, action)];
         numberActions = len(modifiedActions);
@@ -49,11 +53,17 @@ class ReflexAgent:
 
     def actionFilter(self, state, action):
         currentOppWins = getGridWins(state)[getOppIndex(player(state))];
+        printBoard(state[0]);
         # check if making move might give a square to the opponent
         opponentState = succ(state, action);
+        printBoard(state[0]);
+        print;
+        print;
         opponentActions = actions(opponentState);
         # assume a function returning (Player 1 tiles won, Player 2 tiles won) exists getGridWins(state)
+
         opponentSuccess = any([getGridWins(succ(opponentState, oppAction))[getOppIndex(player(state))] > currentOppWins for oppAction in opponentActions]);
+
         return not opponentSuccess;
 
 def featureExtractor(state):
@@ -73,6 +83,7 @@ class MinimaxAgent:
         self.eta = .001;
         # can play with number of iterations
         self.monteCarloIterations = 25;
+        self.eval = lambda state: dotProduct(state, self.weights);
     def monteCarloUpdate(self, state):
         for i in range(self.monteCarloIterations):
             # can play with exploration policy
