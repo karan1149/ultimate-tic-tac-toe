@@ -14,17 +14,6 @@ class Grid():
 		return str(self.grid)
 
 
-
-def getGridWins(state): # returns tuple of (agentWins, oppWins)
-    agentWins = 0
-    oppWins = 0
-    for grid in state[0]: #state[0] = board
-        if(grid.status == 1):
-            agentWins += 1
-        if(grid.status == 2):
-            oppWins += 1
-    return (agentWins, oppWins)
-
 # get start state for game
 def startState():
 	board = []
@@ -33,7 +22,7 @@ def startState():
 	printBoard(board)
 	return (board, 0, None)
 
-
+# fix printing here so it appears to be a proper grid and move to util.py
 def printBoard(board):
 	for row in board:
 		print row

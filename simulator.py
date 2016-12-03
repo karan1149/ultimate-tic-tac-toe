@@ -1,3 +1,3 @@
-import simulate as *;
-import game as *;
-import agent as *;
+import simulate as *
+import game as *
+import agent as *
