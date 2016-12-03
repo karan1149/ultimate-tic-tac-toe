@@ -39,16 +39,17 @@ def actions(state):
 ## Helper method that finds all available positions in a grid and adds to possible actions
 def findActionsInGrid(grid, gridNum):
 	actions = [];
-	for row in grid.grid:
-		for col in row:
+	for rowNumber, row in enumerate(grid.grid):
+		for colNumber, col in enumerate(row):
 			if(col == 0):
-				actions.append((gridNum, posFromRowCol(row, col)))
+				actions.append((gridNum, posFromRowCol(rowNumber, colNumber)))
 	return actions;
 
 
 
 #get successor state from a state given an action
 def succ(state, action):
+	print state, action;
 	board = state[0]
 	grid = board[action[0]]
 	rowCol = rowColFromPos(action[1])
