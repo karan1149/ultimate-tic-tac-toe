@@ -141,51 +141,54 @@ class MinimaxPruningAgent:
         self.eta = .001;
         # can play with number of iterations
         self.monteCarloIterations = 25;
+        self.eval = lambda state: dotProduct(featureExtractor(state), self.weights);
     def monteCarloUpdate(self, state):
         for i in range(self.monteCarloIterations):
             # can play with exploration policy
             episode = [];
             currentState = state;
             while not isEnd(currentState):
-                player = player(currentState);
-                actions = actions(state);
-                if player == 0:
+                currPlayer = player(currentState);
+                currActions = actions(state);
+                if currPlayer == 0:
                     bestNewState = None;
                     bestAction = None;
                     bestScore = float("-inf");
-                    for action in actions:
-                        successor = succ(state, action);
+                    for action in currActions:
+                        successor = succ(currentState, action);
                         score = dotProduct(featureExtractor(successor), self.weights);
                         if score > bestScore:
                             bestAction = action;
                             bestNewState = successor;
-                    reward = 0 if not isEnd(newState) else utility(newState);
-                    episode.extend((currentState, bestAction, reward, bestNewState));
+                    reward = 0 if not isEnd(bestNewState) else utility(bestNewState);
+                    episode.append((currentState, bestAction, reward, bestNewState));
                     currentState = bestNewState;
-                elif player == 1:
+                elif currPlayer == 1:
                     worstNewState = None;
                     worstAction = None;
                     worstScore = float("inf");
-                    for action in actions:
-                        successor = succ(state, action);
+                    for action in currActions:
+                        successor = succ(currentState, action);
                         score = dotProduct(featureExtractor(successor), self.weights);
-                        if score > worstScore:
+                        if score < worstScore:
                             worstAction = action;
                             worstNewState = successor;
-                    reward = 0 if not isEnd(newState) else utility(newState);
-                    episode.extend((currentState, worstAction, reward, worstNewState));
+                    print worstNewState;
+                    print printBoard(worstNewState[0]), worstNewState[1], worstNewState[2];
+                    reward = 0 if not isEnd(worstNewState) else utility(worstNewState);
+                    episode.append((currentState, worstAction, reward, worstNewState));
                     currentState = worstNewState;
             # possibly shuffle or reverse
             for resultTuple in episode:
-                TDLearningUpdate(*resultTuple);
+                self.TDLearningUpdate(*resultTuple);
     def TDLearningUpdate(self, state, action, reward, newState):
         gradient = featureExtractor(state);
         residual = dotProduct(featureExtractor(state), self.weights) - reward - dotProduct(featureExtractor(newState), self.weights);
-        multiplyVector(gradient, residual);
+        multiplySparseVector(gradient, residual);
         incrementSparseVector(self.weights, -1 * self.eta, gradient);
     def getAction(self, state):
         def minimaxValue(state, depth, firstInTree, agent, alpha, beta):
-            actions = actions(state);
+            currActions = actions(state);
             if isEnd(state):
                 return utility(state);
             elif depth == 0:
@@ -193,7 +196,7 @@ class MinimaxPruningAgent:
             newDepth = depth - 1 if agent != firstInTree else depth;
             if agent == 0:
                 if alpha < beta:
-                    for action in actions:
+                    for action in currActions:
                         if alpha < beta:
                             score = minimaxValue(succ(state, action), newDepth, firstInTree, getOppIndex(agent), alpha, beta);
                             if score > alpha:
@@ -203,14 +206,16 @@ class MinimaxPruningAgent:
                 return alpha;
             elif agent == 1:
                 if alpha < beta:
-                    for action in actions:
+                    for action in currActions:
                         if alpha < beta:
                             score = minimaxValue(succ(state, action), newDepth, firstInTree, getOppIndex(agent), alpha, beta);
-                            if result < beta:
-                                beta = result;
+                            if score < beta:
+                                beta = score;
                         else:
                             return beta;
-                return min(minimaxValue(succ(state, action), newDepth, firstInTree, getOppIndex(agent)) for action in actions);
         self.monteCarloUpdate(state);
+        print actions(state);
+        print state;
+        print printBoard(state[0]), state[1], state[2];
         return randomMax([(minimaxValue(succ(state, action), self.depth, getOppIndex(player(state)), getOppIndex(player(state)), float("-inf"), float("inf")), action) \
-            for action in actions]);
+            for action in actions(state)]);
