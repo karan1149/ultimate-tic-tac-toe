@@ -78,8 +78,27 @@ def countAdjacentMoves(state, player):
     adjMoves = 0
     board = state[0]
     for grid in board:
-        for row in grid:
-            for col in row:
-                return
+        adjMoves += gridAdjacentMoves(grid, player)
+
+def gridAdjacentMoves(grid, player):
+    adjMoves = 0
+    grid = grid.grid
+    for x in range(3):
+        for y in range(3):
+            if(grid[x][y] == player + 1):
+                adjMoves += adjacentToSpace(grid, x, y)
+    return adjMoves
+
+def adjacentToSpace(grid,x, y):
+    adjMoves = 0
+    for dx in range(-1, 2):
+        for dy in range(-1, 2):
+            if((x + dx > -1 and x + dx < 3) and (y + dy > -1 and y + dy < 3)): ## in bounds
+                if(grid[x][y] == grid[x+dx][y+dy]):
+                    adjMoves += 1
+    return adjMoves
+
+
+
 
 
