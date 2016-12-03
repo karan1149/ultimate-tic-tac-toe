@@ -17,6 +17,32 @@ class RandomAgent:
         numberActions = len(possibleActions);
         randomAction = possibleActions[random.randrange(numberActions)];
         return randomAction;
+
+class PerceptronAgent:
+
+    def __init__(self):
+        self.weights = {"numWins" : 1, "numCenterPieces": .2, "numAdjacentPieces": .4, "numCornerPieces": .1};
+
+    def getAction(self, state):
+        possibleActions = actions(state);
+        bestAction = None;
+        bestActionScore = float("-inf");
+        for action in possibleActions:
+            score = dotProduct(extractFeatures(succ(state, action)), self.weights);
+            if score > bestActionScore:
+                bestActionScore = score;
+                bestAction = action;
+        return action;
+
+    def extractFeatures(self, state):
+        features = collections.defaultdict(float);
+        features["numWins"] = getGridWins(state)[getOppIndex(player(state))];
+        # assumes helper countCenterMoves(state, player number 0 indexed)
+        features["numCenterPieces"] = countCenterMoves(state, getOppIndex(player(state)));
+        features["numCornerPieces"] = countCornerMoves(state, getOppIndex(player(state)));
+        features["numAdjacentPieces"] = countAdjacentMoves(state, getOppIndex(player(state)));
+        return features;
+
 class ReflexAgent:
     def getAction(self, state):
         possibleActions = actions(state);
