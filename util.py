@@ -29,6 +29,14 @@ def printBoard(board):
                 print curGrid3[k][j],
             print
 
+def printBoardStatuses(board):
+    for i in range(3):
+        printString = "";
+        for q in range(3):
+            printString += str(board[i * 3 + q].status);
+        print printString;
+    print;
+
 def getGridWins(state): # returns tuple of (agentWins, oppWins)
     agentWins = 0
     oppWins = 0
@@ -79,6 +87,7 @@ def countAdjacentMoves(state, player):
     board = state[0]
     for grid in board:
         adjMoves += gridAdjacentMoves(grid, player)
+    return adjMoves;
 
 def gridAdjacentMoves(grid, player):
     adjMoves = 0
