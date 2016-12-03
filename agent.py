@@ -88,7 +88,9 @@ class MinimaxAgent:
                 return max(minimaxValue(succ(state, action), newDepth, firstInTree, getOppIndex(agent)) for action in actions);
             elif agent == 1:
                 return min(minimaxValue(succ(state, action), newDepth, firstInTree, getOppIndex(agent)) for action in actions);
-        def monteCarloUpdate
+        self.monteCarloUpdate(state);
+        return randomMax([(minimaxValue(succ(state, action), self.depth, getOppIndex(player(state)), getOppIndex(player(state))), action) \
+            for action in actions]);
 
         def TDLearning(state, action, reward, newState):
 
