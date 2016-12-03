@@ -15,8 +15,7 @@ class TicTacToeSimulator:
             else:
                 action = self.agent2.getAction(state);
             state = succ(state, action);
-
-        return 1 if utility(state) > 0 else 2;
+        return utility(state);
 
     # play n games and return the percentage of times agent1 won
     def playGames(self, n):

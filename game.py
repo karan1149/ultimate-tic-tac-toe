@@ -19,7 +19,6 @@ def startState():
 	board = []
 	for row in range(9):
 		board.append(Grid())
-	printBoard(board)
 	return (board, 0, None)
 
 
@@ -136,6 +135,8 @@ def isEnd(state):
 # fix this to account for draws
 # utility for state if it is an end state
 def utility(state):
+	printBoard(state[0]);
+	printBoardStatuses(state[0]);
 	if(state[1] == 1):
 		return 100
 	elif(state[1] == 2):
@@ -145,5 +146,3 @@ def utility(state):
 #player that needs to move in a given state
 def player(state):
 	return state[1]
-
-startState()
