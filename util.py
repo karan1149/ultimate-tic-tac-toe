@@ -37,3 +37,31 @@ def randomMax(successors):
     maximumValue = max(successors)[0];
     possibleSuccessors = [successor for successor in successors if successor[0] == maximumValue];
     return random.choice(possibleSuccessors)[1];
+
+def countCenterMoves(state, player):
+    centerMoves = 0
+    board = state[0]
+    for grid in board:
+        if(grid[1][1] == player + 1):
+            centerMoves += 1
+    return centerMoves
+
+def countCornerMoves(state, player):
+    cornerMoves = 0
+    board = state[0]
+    for grid in board:
+        if(grid[0][0] == player + 1):
+            cornerMoves += 1
+        if(grid[0][2] == player + 1):
+            cornerMoves += 1
+        if(grid[2][0] == player + 1):
+            cornerMoves += 1
+        if(grid[2][2] == player + 1):
+            cornerMoves += 1
+    return cornerMoves
+
+def countAdjacentMoves(state, player):
+    adjMoves = 0
+    board = state[0]
+    for grid in board:
+        
