@@ -64,4 +64,7 @@ def countAdjacentMoves(state, player):
     adjMoves = 0
     board = state[0]
     for grid in board:
-        
+        for row in grid:
+            for col in grid[row]:
+                
+
