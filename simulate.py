@@ -1,5 +1,5 @@
-import game as *;
-import agent as *;
+from game import *
+from agent import *
 
 class TicTacToeSimulator:
     def __init__(self, agent1, agent2):

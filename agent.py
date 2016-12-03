@@ -1,7 +1,7 @@
-import game as *
+from game import *
 import random
 import collections
-import util as *
+from util import *
 
 class RandomAgent:
     def getAction(self, state):
