@@ -1,5 +1,10 @@
 import game as *;
 import random;
+def dotProduct(v1, v2):
+    sum = 0;
+    for x in v1:
+        sum += v1[x] * v2[x]
+    return sum;
 
 class RandomAgent:
     def getAction(self, state):
