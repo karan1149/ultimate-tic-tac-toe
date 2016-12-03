@@ -56,11 +56,11 @@ class ReflexAgent:
         return randomAction;
 
     def actionFilter(self, state, action):
-        currentOppWins = getGridWins(state)[1];
+        currentOppWins = getGridWins(state)[getOppIndex(player(state))];
         # check if making move might give a square to the opponent
         opponentState = succ(state, action);
         opponentActions = actions(opponentState);
         # assume a function returning (Player 1 tiles won, Player 2 tiles won) exists getGridWins(state)
-        opponentSuccess = any([getGridWins(succ(opponentState, oppAction))[1] > currentOppWins for oppAction in opponentActions]);
+        opponentSuccess = any([getGridWins(succ(opponentState, oppAction))[getOppIndex(player(state))] > currentOppWins for oppAction in opponentActions]);
         return not opponentSuccess;
 
