@@ -20,7 +20,7 @@ class PerceptronAgent:
         bestAction = None;
         bestActionScore = float("-inf");
         for action in possibleActions:
-            score = dotProduct(simpleFeatureExtractor(succ(state, action)), self.weights);
+            score = dotProduct(self.simpleFeatureExtractor(succ(state, action)), self.weights);
             if score > bestActionScore:
                 bestActionScore = score;
                 bestAction = action;
