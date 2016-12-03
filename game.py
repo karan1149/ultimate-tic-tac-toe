@@ -101,22 +101,27 @@ def isEnd(state):
 	cStat = board[4].status ## Status of center grid
 	if(cStat != 0 and cStat != 3):
 		if((cStat == board[3].status and cStat == board[5].status) or (cStat == board[1].status and cStat == board[7].status) or (cStat == board[0].status and cStat == board[8].status) or (cStat == board[2].status and cStat == board[6].status)):
+			state[1] == cStat
 			return True
 	tmStat = board[1].status ## status of top middle grid
 	if(tmStat != 0 and tmStat != 3):
 		if(tmStat == board[0].status and tmStat == board[2].status):
+			state[1] = tmStat
 			return True
 	lmStat = board[3].status ## status of left middle grid
 	if(lmStat != 0 and lmStat != 3): 
 		if(lmStat == board[0].status and lmStat = board[6].status):
+			state[1] = lmStat
 			return True
 	rmStat = board[5].status ## status of right middle grid
 	if(rmStat != 0 and rmStat != 3):
 		if(rmStat == board[2] and rmStat == board[8]):
+			state[1] = rmStat
 			return True
 	bmStat = board[7].status ## status of bottom middle grid
 	if(bmStat != 0 and bmStat != 3):
 		if(bmStat == board[6].status and bmStat = board[8].status):
+			state[1] = bmStat
 			return True
 	allFilled = 1
 	for grid in board: ## Makes there exists a grid still in play, if not then game is a draw
@@ -124,18 +129,19 @@ def isEnd(state):
 			allFilled = 0
 			break
 	if(allFilled == 1):
+		state[1] = 3
 		return True
 	return False
-
 
 
 # fix this to account for draws
 # utility for state if it is an end state
 def utility(state):
-	if(state[1] == 0):
+	if(state[1] == 1):
 		return 100
-	else:
+	elif(state[1] == 2):
 		return -100
+	return 0
 
 #player that needs to move in a given state
 def player(state):
