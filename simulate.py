@@ -2,12 +2,12 @@ import game as *;
 import agent as *;
 
 class TicTacToeSimulator:
-    __init__(self, Agent1, Agent2):
+    def __init__(self, Agent1, Agent2):
         self.agent1 = Agent1;
         self.agent2 = Agent2;
 
     # play a single game and return the winner
-    playGame(self):
+    def playGame(self):
         state = startState();
         while not isEnd(state):
             if player(state) == 1:
@@ -19,7 +19,7 @@ class TicTacToeSimulator:
         return 1 if utility(state) > 0 else 2;
 
     # play n games and return the percentage of times Agent1 won
-    playGames(self, n):
+    def playGames(self, n):
         won = 0.0;
         for i in range(n):
             won += 1 if self.playGame() == 1 else 0;
