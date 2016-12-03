@@ -50,7 +50,6 @@ def findActionsInGrid(grid, gridNum):
 
 #get successor state from a state given an action
 def succ(state, action):
-	print state, action;
 	board = state[0]
 	grid = board[action[0]]
 	rowCol = rowColFromPos(action[1])

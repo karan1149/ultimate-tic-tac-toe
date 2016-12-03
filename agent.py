@@ -38,7 +38,7 @@ class PerceptronAgent:
 class ReflexAgent:
     def getAction(self, state):
         possibleActions = actions(state);
-        modifiedActions = [action for action in possibleActions if actionFilter(action)];
+        modifiedActions = [action for action in possibleActions if self.actionFilter(state, action)];
         numberActions = len(modifiedActions);
         if numberActions != 0:
             randomAction = modifiedActions[random.randrange(numberActions)];
