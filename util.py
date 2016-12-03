@@ -83,6 +83,3 @@ def countAdjacentMoves(state, player):
                 return
 
 
-
-
-
