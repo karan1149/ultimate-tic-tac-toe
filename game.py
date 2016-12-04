@@ -136,7 +136,6 @@ def playerWins(state):
 # utility for state if it is an end state
 def utility(state):
 	result = playerWins(state)
-	print result[1]
 	if(result[1] == 1):
 		return 100
 	elif(result[1] == 2):
