@@ -14,6 +14,7 @@ class PerceptronAgent:
 
     def __init__(self):
         self.weights = {"numWins" : 5, "numCenterPieces": .2, "numAdjacentPieces": .4, "numCornerPieces": .1};
+        #self.weights = {'numCornerPieces': 246.2619924714171, 'numWins': 45.80041517209499, 'numCenterPieces': 8.942189054369775, 'numAdjacentPieces': 95.58685166135447}
 
     def getAction(self, state):
         possibleActions = actions(state);
@@ -74,7 +75,7 @@ class MinimaxAgent:
         self.depth = d;
         self.weights = collections.defaultdict(float);
         # optimize eta, decreasing function
-        self.eta = .001;
+        self.eta = .0001;
         # can play with number of iterations
         self.monteCarloIterations = 25;
         self.eval = lambda state: dotProduct(state, self.weights);
@@ -141,11 +142,13 @@ class MinimaxAgent:
 class MinimaxPruningAgent:
     def __init__(self, d):
         self.depth = d;
-        self.weights = collections.defaultdict(float);
+        # maybe try randomizng weights
+        #self.weights = collections.defaultdict(float);
+        self.weights = {"numWins" : 5, "numCenterPieces": .2, "numAdjacentPieces": .4, "numCornerPieces": .1};
         # optimize eta, decreasing function
-        self.eta = .001;
+        self.eta = .00001;
         # can play with number of iterations
-        self.monteCarloIterations = 25;
+        self.monteCarloIterations = 1;
         self.eval = lambda state: dotProduct(featureExtractor(state), self.weights);
     def monteCarloUpdate(self, state):
         for i in range(self.monteCarloIterations):
@@ -153,8 +156,14 @@ class MinimaxPruningAgent:
             episode = [];
             currentState = state;
             while not isEnd(currentState):
+                # print currentState;
+                # printBoard(currentState[0]);
+                # print;
                 currPlayer = player(currentState);
-                currActions = actions(state);
+                currActions = actions(currentState);
+                # print currActions;
+                # print;
+                # print;
                 if currPlayer == 0:
                     bestNewState = None;
                     bestAction = None;
@@ -178,14 +187,16 @@ class MinimaxPruningAgent:
                         if score < worstScore:
                             worstAction = action;
                             worstNewState = successor;
-                    print worstNewState;
-                    print printBoard(worstNewState[0]), worstNewState[1], worstNewState[2];
+                    # print worstNewState;
+                    # print printBoard(worstNewState[0]), worstNewState[1], worstNewState[2];
                     reward = 0 if not isEnd(worstNewState) else utility(worstNewState);
                     episode.append((currentState, worstAction, reward, worstNewState));
                     currentState = worstNewState;
             # possibly shuffle or reverse
-            for resultTuple in episode:
+            for resultTuple in reversed(episode):
+                print resultTuple[1], resultTuple[2];
                 self.TDLearningUpdate(*resultTuple);
+        print self.weights;
     def TDLearningUpdate(self, state, action, reward, newState):
         gradient = featureExtractor(state);
         residual = dotProduct(featureExtractor(state), self.weights) - reward - dotProduct(featureExtractor(newState), self.weights);
@@ -193,6 +204,7 @@ class MinimaxPruningAgent:
         incrementSparseVector(self.weights, -1 * self.eta, gradient);
     def getAction(self, state):
         def minimaxValue(state, depth, firstInTree, agent, alpha, beta):
+            # print depth, firstInTree, agent, alpha, beta;
             currActions = actions(state);
             if isEnd(state):
                 return utility(state);
@@ -218,9 +230,9 @@ class MinimaxPruningAgent:
                                 beta = score;
                         else:
                             return beta;
-        self.monteCarloUpdate(state);
-        print actions(state);
-        print state;
         print printBoard(state[0]), state[1], state[2];
+        self.monteCarloUpdate(state);
+        # print actions(state);
+        # print state;
         return randomMax([(minimaxValue(succ(state, action), self.depth, getOppIndex(player(state)), getOppIndex(player(state)), float("-inf"), float("inf")), action) \
             for action in actions(state)]);
