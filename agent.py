@@ -149,8 +149,11 @@ class MinimaxPruningAgent:
     def __init__(self, d):
         self.depth = d;
         # maybe try randomizng weights
-        #self.weights = collections.defaultdict(float);
-        self.weights = {"numWins" : 5, "numCenterPieces": .2, "numAdjacentPieces": .4, "numCornerPieces": .1};
+        # self.weights = collections.defaultdict(float);
+        self.weights = {'numCornerPieces': 0.15121307959905447, 'relativeWins': 0.8387824399748334, 'numAdjacentPieces': 2.802655016890818, 'numWins': 0.6082578660151654, 'numCenterPieces': 0.33556498837778126, 'otherWins': -0.23052457395967144};
+
+        # self.weights = {"numWins" : 5, "numCenterPieces": .2, "numAdjacentPieces": .4, "numCornerPieces": .1};
+        # self.weights = {'numCornerPieces': 1.4111284964453938, 'numWins': 5.279766517051263, 'numCenterPieces': 1.402397811713526, 'numAdjacentPieces': 3.7139422686515933}
         # optimize eta, decreasing function
         self.eta = .00001;
         # can play with number of iterations
