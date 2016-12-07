@@ -225,7 +225,11 @@ class MinimaxPruningAgent:
         print self.weights;
     def TDLearningUpdate(self, state, action, reward, newState):
         gradient = featureExtractor(state);
-        residual = dotProduct(featureExtractor(state), self.weights) - reward - dotProduct(featureExtractor(newState), self.weights);
+        if isEnd(newState):
+            residual = dotProduct(featureExtractor(state), self.weights) - reward;
+        else:
+            residual = dotProduct(featureExtractor(state), self.weights) - reward - dotProduct(featureExtractor(newState), self.weights);
+        # print dotProduct(featureExtractor(state), self.weights), reward, dotProduct(featureExtractor(newState), self.weights), residual;
         multiplySparseVector(gradient, residual);
         incrementSparseVector(self.weights, -1 * self.eta, gradient);
     def getAction(self, state):
