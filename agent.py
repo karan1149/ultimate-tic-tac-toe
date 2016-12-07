@@ -141,6 +141,14 @@ def featureExtractor(state):
     features["numCenterPieces"] = countCenterMoves(state, 0);
     features["numCornerPieces"] = countCornerMoves(state, 0);
     features["numAdjacentPieces"] = countAdjacentMoves(state, 0);
+
+    # adjacent won grids
+    grids = countAdjacentGrids(state);
+    features["numAdjacentWonGrids"] = grids[0];
+    features["numOtherAdjacentWonGrids"] = grids[1];
+    features["gridsDifference"] = grids[0] - grids[1];
+    # effect of limiting next move:
+
     # print features;
     # features["number "]
     return features;
