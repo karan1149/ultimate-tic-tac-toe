@@ -61,15 +61,6 @@ class ReflexAgent:
 
         return not opponentSuccess;
 
-def featureExtractor(state):
-    features = collections.defaultdict(float);
-    features["numWins"] = getGridWins(state)[getOppIndex(player(state))];
-    # assumes helper countCenterMoves(state, player number 0 indexed)
-    features["numCenterPieces"] = countCenterMoves(state, getOppIndex(player(state)));
-    features["numCornerPieces"] = countCornerMoves(state, getOppIndex(player(state)));
-    features["numAdjacentPieces"] = countAdjacentMoves(state, getOppIndex(player(state)));
-    return features;
-
 class MinimaxAgent:
     def __init__(self, d):
         self.depth = d;
@@ -137,7 +128,22 @@ class MinimaxAgent:
         return randomMax([(minimaxValue(succ(state, action), self.depth, getOppIndex(player(state)), getOppIndex(player(state))), action) \
             for action in actions]);
 
+def featureExtractor(state):
+    features = collections.defaultdict(float);
+    wins = getGridWins(state)
+    features["numWins"] = wins[0];
+    features["relativeWins"] = wins[0] - wins[1];
+    features["otherWins"] = wins[1];
 
+    # features["numAdjacentWins"] = getGridWinsAdjacent()
+    # assumes helper countCenterMoves(state, player number 0 indexed)
+    # printBoard(state[0]);
+    features["numCenterPieces"] = countCenterMoves(state, 0);
+    features["numCornerPieces"] = countCornerMoves(state, 0);
+    features["numAdjacentPieces"] = countAdjacentMoves(state, 0);
+    # print features;
+    # features["number "]
+    return features;
 
 class MinimaxPruningAgent:
     def __init__(self, d):
