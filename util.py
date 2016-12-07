@@ -91,6 +91,23 @@ def countAdjacentMoves(state, player):
         adjMoves += gridAdjacentMoves(grid, player)
     return adjMoves;
 
+def countAdjacentGrids(state):
+    # printBoard(state[0]);
+    grids = [0, 0]
+    board = state[0];
+    for row in range(3):
+        for col in range(3):
+            if board[row * 3 + col].status == 1 or board[row * 3 + col].status == 2:
+                status = board[row * 3 + col].status;
+                for dx in range(-1, 2):
+                    for dy in range(-1, 2):
+                        if not (dy == 0 and dx == 0) and row + dx > -1 and row + dx < 3 and col + dy > -1 and col + dy < 3:
+                            if board[(row + dx) * 3 + (col + dy)].status == status:
+                                grids[status - 1] += 1;
+    # printBoardStatuses(state[0]);
+    # print grids;
+    return grids;
+
 def gridAdjacentMoves(grid, player):
     adjMoves = 0
     grid = grid.grid
