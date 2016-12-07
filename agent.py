@@ -236,3 +236,5 @@ class MinimaxPruningAgent:
         # print state;
         return randomMax([(minimaxValue(succ(state, action), self.depth, getOppIndex(player(state)), getOppIndex(player(state)), float("-inf"), float("inf")), action) \
             for action in actions(state)]);
+
+# do expectimax pruning agent
