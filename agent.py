@@ -183,13 +183,17 @@ class MinimaxPruningAgent:
                 if currPlayer == 0:
                     bestNewState = None;
                     bestAction = None;
-                    bestScore = float("-inf");
-                    for action in currActions:
-                        successor = succ(currentState, action);
-                        score = dotProduct(featureExtractor(successor), self.weights);
-                        if score > bestScore:
-                            bestAction = action;
-                            bestNewState = successor;
+                    if random.random() > .25:
+                        bestScore = float("-inf");
+                        for action in currActions:
+                            successor = succ(currentState, action);
+                            score = dotProduct(featureExtractor(successor), self.weights);
+                            if score > bestScore:
+                                bestAction = action;
+                                bestNewState = successor;
+                    else:
+                        bestAction = currActions[random.randrange(len(currActions))];
+                        bestNewState = succ(currentState, bestAction);
                     reward = 0 if not isEnd(bestNewState) else utility(bestNewState);
                     episode.append((currentState, bestAction, reward, bestNewState));
                     currentState = bestNewState;
@@ -208,9 +212,15 @@ class MinimaxPruningAgent:
                     reward = 0 if not isEnd(worstNewState) else utility(worstNewState);
                     episode.append((currentState, worstAction, reward, worstNewState));
                     currentState = worstNewState;
+                    # numberActions = len(currActions);
+                    # randomAction = currActions[random.randrange(numberActions)];
+                    # successor = succ(currentState, randomAction);
+                    # reward = 0 if not isEnd(successor) else utility(successor);
+                    # episode.append((currentState, randomAction, reward, successor));
+                    # currentState = successor;
             # possibly shuffle or reverse
             for resultTuple in reversed(episode):
-                print resultTuple[1], resultTuple[2];
+                # print resultTuple[1], resultTuple[2];
                 self.TDLearningUpdate(*resultTuple);
         print self.weights;
     def TDLearningUpdate(self, state, action, reward, newState):
