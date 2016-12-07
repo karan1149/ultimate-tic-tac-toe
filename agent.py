@@ -157,7 +157,7 @@ class MinimaxPruningAgent:
         # optimize eta, decreasing function
         self.eta = .00001;
         # can play with number of iterations
-        self.monteCarloIterations = 1;
+        self.monteCarloIterations = 50;
         self.eval = lambda state: dotProduct(featureExtractor(state), self.weights);
     def monteCarloUpdate(self, state):
         for i in range(self.monteCarloIterations):
