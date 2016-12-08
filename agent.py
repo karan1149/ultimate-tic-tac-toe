@@ -18,14 +18,11 @@ class PerceptronAgent:
 
     def getAction(self, state):
         possibleActions = actions(state);
-        bestAction = None;
-        bestActionScore = float("-inf");
+        scoredActions = [];
         for action in possibleActions:
-            score = dotProduct(self.simpleFeatureExtractor(succ(state, action)), self.weights);
-            if score > bestActionScore:
-                bestActionScore = score;
-                bestAction = action;
-        return action;
+            successor = succ(state, action);
+            scoredActions.append((dotProduct(self.simpleFeatureExtractor(successor), self.weights), action));
+        return randomMax(scoredActions);
 
     def simpleFeatureExtractor(self, state):
         features = collections.defaultdict(float);
