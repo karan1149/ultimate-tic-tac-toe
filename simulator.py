@@ -3,6 +3,8 @@ from game import *
 from agent import *
 
 agent1 = MinimaxPruningAgent(2);
-agent2 = RandomAgent();
+# agent1 = RandomAgent();
+agent2 = AdvancedPerceptronAgent();
 simulator = TicTacToeSimulator(agent1, agent2);
-print simulator.playGames(10);
+print simulator.playGames(100);
+print "minimax prungin2 vs advanced perceptron agent"
