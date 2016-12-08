@@ -138,6 +138,9 @@ def featureExtractor(state):
     features["numCenterPieces"] = countCenterMoves(state, 0);
     features["numCornerPieces"] = countCornerMoves(state, 0);
     features["numAdjacentPieces"] = countAdjacentMoves(state, 0);
+    features["numOtherCenterPieces"] = countCenterMoves(state, 1);
+    features["numOtherCornerPieces"] = countCornerMoves(state, 1);
+    features["numOtherAdjacentPieces"] = countAdjacentMoves(state, 1);
 
     # adjacent won grids
     grids = countAdjacentGrids(state);
