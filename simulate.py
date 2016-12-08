@@ -19,8 +19,6 @@ class TicTacToeSimulator:
             else:
                 action = self.agent2.getAction(state);
             # print action;
-            # printBoard(state[0]);
-            # print state[1], state[2];
             # print;
             state = succ(state, action);
         util = utility(state);
@@ -34,4 +32,5 @@ class TicTacToeSimulator:
             gameResult = self.playGame();
             won += 1 if gameResult == 1 else 0;
             tied += 1 if gameResult == 3 else 0;
+            print "won/tied so far", won, tied, "out of", i + 1;
         print won / n, tied / n, 1 - won / n - tied / n;
