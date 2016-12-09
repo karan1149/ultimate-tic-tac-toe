@@ -278,4 +278,12 @@ class AdvancedPerceptronAgent:
     def __init__(self):
         self.weights = {'numCornerPieces': 0.811020200948285, 'numOtherCenterPieces': 0.0809559760347321, 'relativeWins': 1.0153244869861855, 'numAdjacentWonGrids': 0.969296961952278, 'numOtherAdjacentWonGrids': -0.6814807021505367, 'advantageOfNextGrid': 0.5395673542865317, 'numOtherCornerPieces': 0.7058793287408335, 'gridsDifference': 1.6507776641028122, 'numAdjacentPieces': 0.7130969880480094, 'numWins': 0.5323490704404454, 'numCenterPieces': 0.021778991208712777, 'otherWins': -0.48297541654574627, 'numOtherAdjacentPieces': -1.2963960051123138};
         #self.weights = {'numCornerPieces': 246.2619924714171, 'numWins': 45.80041517209499, 'numCenterPieces': 8.942189054369775, 'numAdjacentPieces': 95.58685166135447}
+
+    def getAction(self, state):
+        possibleActions = actions(state);
+        scoredActions = [];
+        for action in possibleActions:
+            successor = succ(state, action);
+            scoredActions.append((dotProduct(featureExtractor(successor), self.weights), action));
+        return randomMax(scoredActions);
 # do expectimax pruning agent
