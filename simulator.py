@@ -12,19 +12,55 @@ from agent import *
 # agent2 = RandomAgent();
 # simulator = UltimateTicTacToeSimulator(agent1, agent2);
 # print simulator.playGames(10000);
-# print "percep vs random agent"
-#
+# print "percep vs random agent" # 0.6425 0.1189 0.2386 10,000 trials
+
 # agent1 = ReflexAgent();
 # agent2 = RandomAgent();
 # simulator = UltimateTicTacToeSimulator(agent1, agent2);
 # print simulator.playGames(1000);
-# print "reflex vs random agent";
+# print "reflex vs random agent"; # 0.416 0.349 0.235 1000
+#
+# agent1 = PerceptronAgent();
+# agent2 = ReflexAgent();
+# simulator = UltimateTicTacToeSimulator(agent1, agent2);
+# print simulator.playGames(1000);
+# print "percep vs reflex agent" # 0.54 0.154 0.306 1000
 
-agent1 = PerceptronAgent();
+# agent1 = PerceptronAgent();
+# agent2 = PerceptronAgent();
+# simulator = UltimateTicTacToeSimulator(agent1, agent2);
+# print simulator.playGames(5000);
+# print "percep vs percep agent" # 0.5588 0.0408 0.4004 5,000
+#
+# agent1 = ReflexAgent();
+# agent2 = ReflexAgent();
+# simulator = UltimateTicTacToeSimulator(agent1, agent2);
+# print simulator.playGames(1000);
+# print "reflex vs reflex agent" # 0.305 0.424 0.271 1000
+
+# agent1 = AdvancedPerceptronAgent();
+# agent2 = AdvancedPerceptronAgent();
+# simulator = UltimateTicTacToeSimulator(agent1, agent2);
+# print simulator.playGames(5000);
+# print "adv percep vs adv percep agent" #
+#
+# agent1 = AdvancedPerceptronAgent();
+# agent2 = PerceptronAgent();
+# simulator = UltimateTicTacToeSimulator(agent1, agent2);
+# print simulator.playGames(5000);
+# print "adv percep v percep agent" #
+
+agent1 = AdvancedPerceptronAgent();
 agent2 = ReflexAgent();
 simulator = UltimateTicTacToeSimulator(agent1, agent2);
-print simulator.playGames(10000);
-print "percep vs reflex agent"
+print simulator.playGames(1000);
+print "adv percep v reflex agent" #
+
+agent1 = AdvancedPerceptronAgent();
+agent2 = RandomAgent();
+simulator = UltimateTicTacToeSimulator(agent1, agent2);
+print simulator.playGames(5000);
+print "advanced percep vs random agent" #
 
 
 # agent1 = MinimaxPruningAgent(2);
