@@ -160,7 +160,9 @@ class MinimaxPruningAgent:
     def __init__(self, d):
         self.depth = d;
         # maybe try randomizng weights
-        self.weights = collections.defaultdict(float);
+        # self.weights = collections.defaultdict(float);
+        self.weights = {'numCornerPieces': 0.811020200948285, 'numOtherCenterPieces': 0.0809559760347321, 'relativeWins': 1.0153244869861855, 'numAdjacentWonGrids': 0.969296961952278, 'numOtherAdjacentWonGrids': -0.6814807021505367, 'advantageOfNextGrid': 0.5395673542865317, 'numOtherCornerPieces': 0.7058793287408335, 'gridsDifference': 1.6507776641028122, 'numAdjacentPieces': 0.7130969880480094, 'numWins': 0.5323490704404454, 'numCenterPieces': 0.021778991208712777, 'otherWins': -0.48297541654574627, 'numOtherAdjacentPieces': -1.2963960051123138};
+
         # self.weights = {'numCornerPieces': 0.15121307959905447, 'relativeWins': 0.8387824399748334, 'numAdjacentPieces': 2.802655016890818, 'numWins': 0.6082578660151654, 'numCenterPieces': 0.33556498837778126, 'otherWins': -0.23052457395967144};
 
         # self.weights = {"numWins" : 5, "numCenterPieces": .2, "numAdjacentPieces": .4, "numCornerPieces": .1};
@@ -168,7 +170,7 @@ class MinimaxPruningAgent:
         # optimize eta, decreasing function
         self.eta = .00001;
         # can play with number of iterations
-        self.monteCarloIterations = 50;
+        self.monteCarloIterations = 25;
         self.eval = lambda state: dotProduct(featureExtractor(state), self.weights);
     def monteCarloUpdate(self, state):
         for i in range(self.monteCarloIterations):
@@ -245,6 +247,7 @@ class MinimaxPruningAgent:
             elif depth == 0:
                 return self.eval(state);
             newDepth = depth - 1 if agent != firstInTree else depth;
+            # print agent;
             if agent == 0:
                 if alpha < beta:
                     for action in currActions:
@@ -271,4 +274,8 @@ class MinimaxPruningAgent:
         return randomMax([(minimaxValue(succ(state, action), self.depth, getOppIndex(player(state)), getOppIndex(player(state)), float("-inf"), float("inf")), action) \
             for action in actions(state)]);
 
+class AdvancedPerceptronAgent:
+    def __init__(self):
+        self.weights = {'numCornerPieces': 0.811020200948285, 'numOtherCenterPieces': 0.0809559760347321, 'relativeWins': 1.0153244869861855, 'numAdjacentWonGrids': 0.969296961952278, 'numOtherAdjacentWonGrids': -0.6814807021505367, 'advantageOfNextGrid': 0.5395673542865317, 'numOtherCornerPieces': 0.7058793287408335, 'gridsDifference': 1.6507776641028122, 'numAdjacentPieces': 0.7130969880480094, 'numWins': 0.5323490704404454, 'numCenterPieces': 0.021778991208712777, 'otherWins': -0.48297541654574627, 'numOtherAdjacentPieces': -1.2963960051123138};
+        #self.weights = {'numCornerPieces': 246.2619924714171, 'numWins': 45.80041517209499, 'numCenterPieces': 8.942189054369775, 'numAdjacentPieces': 95.58685166135447}
 # do expectimax pruning agent
