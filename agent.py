@@ -148,7 +148,11 @@ def featureExtractor(state):
     features["numOtherAdjacentWonGrids"] = grids[1];
     features["gridsDifference"] = grids[0] - grids[1];
     # effect of limiting next move:
-
+    if state[2] is not None:
+        # advantage of making move from the forced grid, if the next player is the first player
+        features["advantageOfNextGrid"] = gridAdjacentMoves(state[0][state[2]], 0);
+        if state[1] == 1:
+            features["advantageOfNextGrid"] *= -1;
     # print features;
     return features;
 
