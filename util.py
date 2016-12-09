@@ -88,6 +88,19 @@ def countCornerMoves(state, player):
             cornerMoves += 1
     return cornerMoves
 
+def simpleCountCornerMoves(state, player):
+    cornerMoves = 0;
+    board = state[0];
+    if(board[0][0] == player + 1):
+        cornerMoves += 1
+    if(board[0][2] == player + 1):
+        cornerMoves += 1
+    if(board[2][0] == player + 1):
+        cornerMoves += 1
+    if(board[2][2] == player + 1):
+        cornerMoves += 1
+    return cornerMoves;
+
 def countAdjacentMoves(state, player):
     adjMoves = 0
     board = state[0]
@@ -113,6 +126,15 @@ def countAdjacentGrids(state):
 def gridAdjacentMoves(grid, player):
     adjMoves = 0
     grid = grid.grid
+    for x in range(3):
+        for y in range(3):
+            if(grid[x][y] == player + 1):
+                adjMoves += adjacentToSpace(grid, x, y)
+    return adjMoves
+
+def simpleAdjacentMoves(state, player):
+    adjMoves = 0;
+    grid = state[0];
     for x in range(3):
         for y in range(3):
             if(grid[x][y] == player + 1):
