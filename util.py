@@ -104,8 +104,6 @@ def countAdjacentGrids(state):
                         if not (dy == 0 and dx == 0) and row + dx > -1 and row + dx < 3 and col + dy > -1 and col + dy < 3:
                             if board[(row + dx) * 3 + (col + dy)].status == status:
                                 grids[status - 1] += 1;
-    # printBoardStatuses(state[0]);
-    # print grids;
     return grids;
 
 def gridAdjacentMoves(grid, player):
