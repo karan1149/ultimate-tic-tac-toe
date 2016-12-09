@@ -249,6 +249,8 @@ class MinimaxPruningAgent:
             newDepth = depth - 1 if agent != firstInTree else depth;
             # print agent;
             if agent == 0:
+                currActions.sort(key=lambda x: self.eval(succ(state, x)), reverse=True);
+                currActions = currActions[:3];
                 if alpha < beta:
                     for action in currActions:
                         if alpha < beta:
@@ -259,6 +261,8 @@ class MinimaxPruningAgent:
                             return alpha;
                 return alpha;
             elif agent == 1:
+                currActions.sort(key=lambda x: self.eval(succ(state, x)));
+                currActions = currActions[:3];
                 if alpha < beta:
                     for action in currActions:
                         if alpha < beta:
@@ -267,10 +271,12 @@ class MinimaxPruningAgent:
                                 beta = score;
                         else:
                             return beta;
-        print printBoard(state[0]), state[1], state[2];
-        self.monteCarloUpdate(state);
+
+        # self.monteCarloUpdate(state);
         # print actions(state);
-        # print state;
+        # printBoard(state[0]);
+        # print [(minimaxValue(succ(state, action), self.depth, getOppIndex(player(state)), getOppIndex(player(state)), float("-inf"), float("inf")), action) \
+        #     for action in actions(state)];
         return randomMax([(minimaxValue(succ(state, action), self.depth, getOppIndex(player(state)), getOppIndex(player(state)), float("-inf"), float("inf")), action) \
             for action in actions(state)]);
 
