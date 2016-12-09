@@ -133,8 +133,6 @@ def featureExtractor(state):
     features["otherWins"] = wins[1];
 
     # features["numAdjacentWins"] = getGridWinsAdjacent()
-    # assumes helper countCenterMoves(state, player number 0 indexed)
-    # printBoard(state[0]);
     features["numCenterPieces"] = countCenterMoves(state, 0);
     features["numCornerPieces"] = countCornerMoves(state, 0);
     features["numAdjacentPieces"] = countAdjacentMoves(state, 0);
@@ -153,7 +151,6 @@ def featureExtractor(state):
         features["advantageOfNextGrid"] = gridAdjacentMoves(state[0][state[2]], 0);
         if state[1] == 1:
             features["advantageOfNextGrid"] *= -1;
-    # print features;
     return features;
 
 class MinimaxPruningAgent:
@@ -162,11 +159,6 @@ class MinimaxPruningAgent:
         # maybe try randomizng weights
         # self.weights = collections.defaultdict(float);
         self.weights = {'numCornerPieces': 0.811020200948285, 'numOtherCenterPieces': 0.0809559760347321, 'relativeWins': 1.0153244869861855, 'numAdjacentWonGrids': 0.969296961952278, 'numOtherAdjacentWonGrids': -0.6814807021505367, 'advantageOfNextGrid': 0.5395673542865317, 'numOtherCornerPieces': 0.7058793287408335, 'gridsDifference': 1.6507776641028122, 'numAdjacentPieces': 0.7130969880480094, 'numWins': 0.5323490704404454, 'numCenterPieces': 0.021778991208712777, 'otherWins': -0.48297541654574627, 'numOtherAdjacentPieces': -1.2963960051123138};
-
-        # self.weights = {'numCornerPieces': 0.15121307959905447, 'relativeWins': 0.8387824399748334, 'numAdjacentPieces': 2.802655016890818, 'numWins': 0.6082578660151654, 'numCenterPieces': 0.33556498837778126, 'otherWins': -0.23052457395967144};
-
-        # self.weights = {"numWins" : 5, "numCenterPieces": .2, "numAdjacentPieces": .4, "numCornerPieces": .1};
-        # self.weights = {'numCornerPieces': 1.4111284964453938, 'numWins': 5.279766517051263, 'numCenterPieces': 1.402397811713526, 'numAdjacentPieces': 3.7139422686515933}
         # optimize eta, decreasing function
         self.eta = .00001;
         # can play with number of iterations
@@ -178,14 +170,8 @@ class MinimaxPruningAgent:
             episode = [];
             currentState = state;
             while not isEnd(currentState):
-                # print currentState;
-                # printBoard(currentState[0]);
-                # print;
                 currPlayer = player(currentState);
                 currActions = actions(currentState);
-                # print currActions;
-                # print;
-                # print;
                 if currPlayer == 0:
                     bestNewState = None;
                     bestAction = None;
@@ -213,8 +199,6 @@ class MinimaxPruningAgent:
                         if score < worstScore:
                             worstAction = action;
                             worstNewState = successor;
-                    # print worstNewState;
-                    # print printBoard(worstNewState[0]), worstNewState[1], worstNewState[2];
                     reward = 0 if not isEnd(worstNewState) else utility(worstNewState);
                     episode.append((currentState, worstAction, reward, worstNewState));
                     currentState = worstNewState;
@@ -235,12 +219,10 @@ class MinimaxPruningAgent:
             residual = dotProduct(featureExtractor(state), self.weights) - reward;
         else:
             residual = dotProduct(featureExtractor(state), self.weights) - reward - dotProduct(featureExtractor(newState), self.weights);
-        # print dotProduct(featureExtractor(state), self.weights), reward, dotProduct(featureExtractor(newState), self.weights), residual;
         multiplySparseVector(gradient, residual);
         incrementSparseVector(self.weights, -1 * self.eta, gradient);
     def getAction(self, state):
         def minimaxValue(state, depth, firstInTree, agent, alpha, beta):
-            # print depth, firstInTree, agent, alpha, beta;
             currActions = actions(state);
             if isEnd(state):
                 return utility(state);
@@ -273,17 +255,12 @@ class MinimaxPruningAgent:
                             return beta;
 
         # self.monteCarloUpdate(state);
-        # print actions(state);
-        # printBoard(state[0]);
-        # print [(minimaxValue(succ(state, action), self.depth, getOppIndex(player(state)), getOppIndex(player(state)), float("-inf"), float("inf")), action) \
-        #     for action in actions(state)];
         return randomMax([(minimaxValue(succ(state, action), self.depth, getOppIndex(player(state)), getOppIndex(player(state)), float("-inf"), float("inf")), action) \
             for action in actions(state)]);
 
 class AdvancedPerceptronAgent:
     def __init__(self):
         self.weights = {'numCornerPieces': 0.811020200948285, 'numOtherCenterPieces': 0.0809559760347321, 'relativeWins': 1.0153244869861855, 'numAdjacentWonGrids': 0.969296961952278, 'numOtherAdjacentWonGrids': -0.6814807021505367, 'advantageOfNextGrid': 0.5395673542865317, 'numOtherCornerPieces': 0.7058793287408335, 'gridsDifference': 1.6507776641028122, 'numAdjacentPieces': 0.7130969880480094, 'numWins': 0.5323490704404454, 'numCenterPieces': 0.021778991208712777, 'otherWins': -0.48297541654574627, 'numOtherAdjacentPieces': -1.2963960051123138};
-        #self.weights = {'numCornerPieces': 246.2619924714171, 'numWins': 45.80041517209499, 'numCenterPieces': 8.942189054369775, 'numAdjacentPieces': 95.58685166135447}
 
     def getAction(self, state):
         possibleActions = actions(state);
