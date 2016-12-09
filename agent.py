@@ -2,10 +2,18 @@ from game import *
 import random
 import collections
 from util import *
+import simplegame
 
 class RandomAgent:
     def getAction(self, state):
         possibleActions = actions(state);
+        numberActions = len(possibleActions);
+        randomAction = possibleActions[random.randrange(numberActions)];
+        return randomAction;
+
+class SimpleRandomAgent:
+    def getAction(self, state):
+        possibleActions = simplegame.actions(state);
         numberActions = len(possibleActions);
         randomAction = possibleActions[random.randrange(numberActions)];
         return randomAction;
