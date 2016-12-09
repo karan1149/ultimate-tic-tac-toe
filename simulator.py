@@ -70,12 +70,9 @@ print "advanced percep vs random agent" #
 # print simulator.playGames(100);
 # print "minimax prungin2 vs advanced perceptron agent"
 
-# agent1 = ExpectimaxAgent(1);
-# # agent1 = RandomAgent();
-# agent2 = PerceptronAgent();
-# simulator = UltimateTicTacToeSimulator(agent1, agent2);
-# print simulator.playGames(100);
-# print "^ expectimax1 vs reg perceptron agent"
+
+
+
 
 #
 # simple agent code
