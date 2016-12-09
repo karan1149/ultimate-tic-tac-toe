@@ -56,7 +56,6 @@ class SimplePerceptronAgent:
         features = collections.defaultdict(float);
         otherPlayer = getOppIndex(player(state));
         features["numWins"] = 1 if simplegame.playerWins(state)[1] == otherPlayer + 1 else 0;
-
         features["numCenterPieces"] = 1 if state[0][1][1] == otherPlayer else 0;
         features["numCornerPieces"] = simpleCountCornerMoves(state, otherPlayer);
         features["numAdjacentPieces"] = simpleAdjacentMoves(state, otherPlayer);
