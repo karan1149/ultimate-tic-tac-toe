@@ -17,6 +17,10 @@ def multiplySparseVector(v1, scale):
 def getOppIndex(playerIndex):
     return abs(playerIndex - 1);
 
+def printSimpleBoard(board):
+    for i in range(3):
+        print board[i][0], board[i][1], board[i][2];
+
 def printBoard(board):
     for i in range(3):
         curGrid1 = board[i*3].grid
