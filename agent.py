@@ -39,6 +39,29 @@ class PerceptronAgent:
         features["numAdjacentPieces"] = countAdjacentMoves(state, getOppIndex(player(state)));
         return features;
 
+class SimplePerceptronAgent:
+
+    def __init__(self):
+        self.weights = {"numWins" : 5, "numCenterPieces": .2, "numAdjacentPieces": .4, "numCornerPieces": .1};
+
+    def getAction(self, state):
+        possibleActions = simplegame.actions(state);
+        scoredActions = [];
+        for action in possibleActions:
+            successor = simplegame.succ(state, action);
+            scoredActions.append((dotProduct(self.simpleFeatureExtractor(successor), self.weights), action));
+        return randomMax(scoredActions);
+
+    def simpleFeatureExtractor(self, state):
+        features = collections.defaultdict(float);
+        otherPlayer = getOppIndex(player(state));
+        features["numWins"] = 1 if simplegame.playerWins(state)[1] == otherPlayer + 1 else 0;
+
+        features["numCenterPieces"] = 1 if state[0][1][1] == otherPlayer else 0;
+        features["numCornerPieces"] = simpleCountCornerMoves(state, otherPlayer);
+        features["numAdjacentPieces"] = simpleAdjacentMoves(state, otherPlayer);
+        return features;
+
 class ReflexAgent:
     def getAction(self, state):
         possibleActions = actions(state);
