@@ -4,6 +4,8 @@ import collections
 from util import *
 import simplegame
 
+# RandomAgent, PerceptronAgent, ReflexAgent, AdvancedPerceptronAgent, MinimaxPruningAgent, ExpectimaxAgent, simple agents
+
 class RandomAgent:
     def getAction(self, state):
         possibleActions = actions(state);
