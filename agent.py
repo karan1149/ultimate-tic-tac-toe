@@ -14,7 +14,6 @@ class PerceptronAgent:
 
     def __init__(self):
         self.weights = {"numWins" : 5, "numCenterPieces": .2, "numAdjacentPieces": .4, "numCornerPieces": .1};
-        #self.weights = {'numCornerPieces': 246.2619924714171, 'numWins': 45.80041517209499, 'numCenterPieces': 8.942189054369775, 'numAdjacentPieces': 95.58685166135447}
 
     def getAction(self, state):
         possibleActions = actions(state);
@@ -27,7 +26,6 @@ class PerceptronAgent:
     def simpleFeatureExtractor(self, state):
         features = collections.defaultdict(float);
         features["numWins"] = getGridWins(state)[getOppIndex(player(state))];
-        # assumes helper countCenterMoves(state, player number 0 indexed)
         features["numCenterPieces"] = countCenterMoves(state, getOppIndex(player(state)));
         features["numCornerPieces"] = countCornerMoves(state, getOppIndex(player(state)));
         features["numAdjacentPieces"] = countAdjacentMoves(state, getOppIndex(player(state)));
@@ -52,8 +50,6 @@ class ReflexAgent:
         # check if making move might give a square to the opponent
         opponentState = succ(state, action);
         opponentActions = actions(opponentState);
-        # assume a function returning (Player 1 tiles won, Player 2 tiles won) exists getGridWins(state)
-
         opponentSuccess = any([getGridWins(succ(opponentState, oppAction))[getOppIndex(player(state))] > currentOppWins for oppAction in opponentActions]);
 
         return not opponentSuccess;
@@ -270,3 +266,39 @@ class AdvancedPerceptronAgent:
             scoredActions.append((dotProduct(featureExtractor(successor), self.weights), action));
         return randomMax(scoredActions);
 # do expectimax pruning agent
+
+class ExpectimaxAgent:
+    def __init__(self, d):
+        self.depth = d;
+        # maybe try randomizng weights
+        # self.weights = collections.defaultdict(float);
+        self.weights = {'numCornerPieces': 0.811020200948285, 'numOtherCenterPieces': 0.0809559760347321, 'relativeWins': 1.0153244869861855, 'numAdjacentWonGrids': 0.969296961952278, 'numOtherAdjacentWonGrids': -0.6814807021505367, 'advantageOfNextGrid': 0.5395673542865317, 'numOtherCornerPieces': 0.7058793287408335, 'gridsDifference': 1.6507776641028122, 'numAdjacentPieces': 0.7130969880480094, 'numWins': 0.5323490704404454, 'numCenterPieces': 0.021778991208712777, 'otherWins': -0.48297541654574627, 'numOtherAdjacentPieces': -1.2963960051123138};
+        self.eval = lambda state: dotProduct(featureExtractor(state), self.weights);
+    def getAction(self, state):
+        def minimaxValue(state, depth, firstInTree, agent):
+            currActions = actions(state);
+            if isEnd(state):
+                return utility(state);
+            elif depth == 0:
+                return self.eval(state);
+            newDepth = depth - 1 if agent != firstInTree else depth;
+            if agent == 0:
+                currActions.sort(key=lambda x: self.eval(succ(state, x)), reverse=True);
+                currActions = currActions[:3];
+                maxScore = float("-inf");
+                for action in currActions:
+                    score = minimaxValue(succ(state, action), newDepth, firstInTree, getOppIndex(agent));
+                    if score > maxScore:
+                        maxScore = score;
+                return maxScore;
+            elif agent == 1:
+                scoreSum = 0.0;
+                for action in currActions:
+                    score = minimaxValue(succ(state, action), newDepth, firstInTree, getOppIndex(agent));
+                    scoreSum += score;
+                return scoreSum / len(currActions);
+
+
+        # self.monteCarloUpdate(state);
+        return randomMax([(minimaxValue(succ(state, action), self.depth, getOppIndex(player(state)), getOppIndex(player(state))), action) \
+            for action in actions(state)]);
