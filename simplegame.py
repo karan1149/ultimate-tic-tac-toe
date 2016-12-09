@@ -16,7 +16,7 @@ def actions(state):
 	for rowNumber, row in enumerate(state[0]):
 		for colNumber, col in enumerate(row):
 			if(col == 0):
-				actions.append(posFromRowCol(rowNumber, colNumer))
+				actions.append(posFromRowCol(rowNumber, colNumber))
 	return actions
 
 
@@ -72,4 +72,3 @@ def utility(state):
 ## gets which player's turn it is
 def player(state):
 	return state[1]
-
