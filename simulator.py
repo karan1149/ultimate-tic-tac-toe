@@ -171,7 +171,7 @@ from agent import *
 # agent2 = AdvancedPerceptronAgent();
 # simulator = UltimateTicTacToeSimulator(agent1, agent2);
 # print simulator.playGames(750);
-# print "expectimax 1 vs adv perceptron" #
+# print "expectimax 1 vs adv perceptron" # won/tied so far 481.0 16.0 out of 500 
 
 
 agent1 = ExpectimaxAgent(1);
