@@ -103,19 +103,19 @@ from agent import *
 # agent2 = AdvancedPerceptronAgent();
 # simulator = UltimateTicTacToeSimulator(agent1, agent2);
 # print simulator.playGames(1000);
-# print "minimax pruning 1 vs adv percep agent" #
+# print "minimax pruning 1 vs adv percep agent" # 0.782 0.078 0.14 1000 trials
 #
 # agent1 = MinimaxPruningAgent(2);
 # agent2 = AdvancedPerceptronAgent();
 # simulator = UltimateTicTacToeSimulator(agent1, agent2);
 # print simulator.playGames(500);
-# print "minimax pruning 2 vs adv percep agent" #
+# print "minimax pruning 2 vs adv percep agent" # 0.766 0.09 0.144 500 trials
 #
 # agent1 = MinimaxPruningAgent(1);
 # agent2 = MinimaxPruningAgent(1);
 # simulator = UltimateTicTacToeSimulator(agent1, agent2);
 # print simulator.playGames(500);
-# print "minimax pruning 1 vs minimax pruning 1" #
+# print "minimax pruning 1 vs minimax pruning 1" # 0.508 0.122 0.37 500 trials
 
 
 
@@ -143,14 +143,14 @@ from agent import *
 # agent2 = RandomAgent();
 # simulator = UltimateTicTacToeSimulator(agent1, agent2);
 # print simulator.playGames(1000);
-# print "expectimax 1 vs random" #
+# print "expectimax 1 vs random" # 0.984 0.01 0.006 1000 trials
 #
 #
 # agent1 = ExpectimaxAgent(1);
 # agent2 = ReflexAgent();
 # simulator = UltimateTicTacToeSimulator(agent1, agent2);
 # print simulator.playGames(750);
-# print "expectimax 1 vs reflex" #
+# print "expectimax 1 vs reflex" # 0.930666666667 0.0506666666667 0.0186666666667 750 trials
 
 
 
@@ -161,24 +161,24 @@ from agent import *
 # print simulator.playGames(500);
 # print "expectimax 2 vs perceptron" # 55.0 0.0 out of 55 could not finish runs, but ran 54 and won every time
 
-agent1 = ExpectimaxAgent(1);
-agent2 = PerceptronAgent();
-simulator = UltimateTicTacToeSimulator(agent1, agent2);
-print simulator.playGames(750);
-print "expectimax 1 vs perceptron" #
-
-agent1 = ExpectimaxAgent(1);
-agent2 = AdvancedPerceptronAgent();
-simulator = UltimateTicTacToeSimulator(agent1, agent2);
-print simulator.playGames(750);
-print "expectimax 1 vs adv perceptron" #
+# agent1 = ExpectimaxAgent(1);
+# agent2 = PerceptronAgent();
+# simulator = UltimateTicTacToeSimulator(agent1, agent2);
+# print simulator.playGames(750);
+# print "expectimax 1 vs perceptron" # 0.866666666667 0.0893333333333 0.044 750 trials
+#
+# agent1 = ExpectimaxAgent(1);
+# agent2 = AdvancedPerceptronAgent();
+# simulator = UltimateTicTacToeSimulator(agent1, agent2);
+# print simulator.playGames(750);
+# print "expectimax 1 vs adv perceptron" #
 
 
 agent1 = ExpectimaxAgent(1);
 agent2 = MinimaxPruningAgent(1);
 simulator = UltimateTicTacToeSimulator(agent1, agent2);
 print simulator.playGames(500);
-print "expectimax 1 vs minimax pruning 1" #
+print "expectimax 1 vs minimax pruning 1" # 0.99 0.008 0.002 500 trials
 
 
 
